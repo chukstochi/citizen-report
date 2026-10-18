@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src * data: blob: gap: 'unsafe-inline' 'unsafe-eval'">
+  <title>Citizen Report</title>
+  <link rel="stylesheet" href="lib/app.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <div class="app-page" data-page="login">
+    <div class="app-topbar">
+      <div class="app-title">Citizen Report</div>
+    </div>
+    <div class="app-content">
+      <div class="pad">
+        <h2>Log in to report</h2>
+        <p class="muted">Use your Citizen Report account.</p>
+        <input class="app-input user" placeholder="Username" autocapitalize="none">
+        <input class="app-input pass" type="password" placeholder="Password">
+        <div class="app-button primary go">Log in</div>
+        <div class="app-button reg">Create account</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-page" data-page="home">
+    <div class="app-topbar">
+      <div class="app-button left" data-target="mine">My reports</div>
+      <div class="app-title">Incidents</div>
+      <div class="app-button right" data-target="add">Report</div>
+    </div>
+    <div class="app-content">
+      <div class="pad">
+        <div class="chips"></div>
+        <div class="list"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-page" data-page="add">
+    <div class="app-topbar">
+      <div class="app-button left" data-back>Back</div>
+      <div class="app-title">Report incident</div>
+    </div>
+    <div class="app-content">
+      <div class="pad">
+        <input class="app-input title" placeholder="What happened?">
+        <select class="sel cat"></select>
+        <textarea class="app-input desc" rows="4" placeholder="Describe the incident"></textarea>
+        <div class="app-button photo">Add a photo</div>
+        <img class="preview" hidden alt="Incident photo">
+        <div class="app-button loc">Use my location</div>
+        <p class="muted loctext">Location not added yet.</p>
+        <div class="app-button primary send">Submit report</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-page" data-page="mine">
+    <div class="app-topbar">
+      <div class="app-button left" data-back>Back</div>
+      <div class="app-title">My reports</div>
+    </div>
+    <div class="app-content">
+      <div class="pad">
+        <div class="list"></div>
+        <div class="app-button out">Log out</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-page" data-page="detail">
+    <div class="app-topbar">
+      <div class="app-button left" data-back>Back</div>
+      <div class="app-title">Incident</div>
+    </div>
+    <div class="app-content">
+      <div class="pad detail"></div>
+    </div>
+  </div>
+
+  <div id="banner"></div>
+  <div id="toast"></div>
+  <script src="cordova.js"></script>
+  <script src="lib/zepto.min.js"></script>
+  <script src="lib/app.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>

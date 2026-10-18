@@ -1,0 +1,9 @@
+Place these three files in this folder (www/lib):
+  app.min.css
+  app.min.js
+  zepto.min.js
+App.js was published by Kik. Tutorials show these addresses (check they still work, or use your class files):
+  https://cdn.kik.com/app/3.0.0/app.min.css
+  https://cdn.kik.com/app/3.0.0/app.min.js
+  https://zeptojs.com/zepto.min.js
+Open each link in your browser, press Ctrl+S, and save it here with the name above.
