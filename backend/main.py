@@ -137,3 +137,7 @@ def add_incident(title: str = Form(...), category: str = Form(...), description:
         c.execute("INSERT INTO incidents(user_id,title,category,description,photo,lat,lng,created) VALUES(?,?,?,?,?,?,?,?)",
                   (user["id"], title.strip(), category, description.strip(), name, lat, lng, time.time()))
     return {"ok": True}
+
+    if __name__ == "__main__":
+    import os, uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
