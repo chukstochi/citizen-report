@@ -137,7 +137,16 @@ def add_incident(title: str = Form(...), category: str = Form(...), description:
         c.execute("INSERT INTO incidents(user_id,title,category,description,photo,lat,lng,created) VALUES(?,?,?,?,?,?,?,?)",
                   (user["id"], title.strip(), category, description.strip(), name, lat, lng, time.time()))
     return {"ok": True}
-
-    if __name__ == "__main__":
-       import os, uvicorn
-       uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
+       
+@app.delete("/incidents/{iid}")
+def delete_incident(iid: int, user=Depends(current)):
+    with db() as c:
+        row = c.execute("SELECT user_id, photo FROM incidents WHERE id=?", (iid,)).fetchone()
+        if not row:
+            raise HTTPException(404, "Report not found.")
+        if row["user_id"] != user["id"]:
+            raise HTTPException(403, "You can only delete your own reports.")
+        c.execute("DELETE FROM incidents WHERE id=?", (iid,))
+    if row["photo"]:
+        (UP / row["photo"]).unlink(missing_ok=True)
+    return {"ok": True}

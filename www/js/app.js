@@ -22,8 +22,10 @@
     clearTimeout(banner.t); banner.t = setTimeout(() => b.classList.remove('show'), 7000);
   }
   function osNotify(text) { // phone notification, only if the optional local-notification plugin is installed
-    try { const n = window.cordova && cordova.plugins && cordova.plugins.notification && cordova.plugins.notification.local;
-      if (n) n.schedule({ id: Date.now() % 100000, title: 'Citizen Report', text, foreground: true }); } catch (e) { /* ignore */ }
+    try {
+      const n = window.cordova && cordova.plugins && cordova.plugins.notification && cordova.plugins.notification.local;
+      if (n) n.schedule({ id: Date.now() % 100000, title: 'Citizen Report', text, foreground: true });
+    } catch (e) { /* ignore */ }
   }
 
   async function api(path, opts = {}) {
@@ -165,6 +167,17 @@
       (has ? `<h3>Location</h3><p class="muted">Latitude ${i.lat.toFixed(5)}, Longitude ${i.lng.toFixed(5)}</p>
         <iframe class="map" title="Map of the incident" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=${i.lng - d}%2C${i.lat - d}%2C${i.lng + d}%2C${i.lat + d}&layer=mapnik&marker=${i.lat}%2C${i.lng}"></iframe>
         <a class="app-button" target="_blank" rel="noopener" href="https://www.openstreetmap.org/?mlat=${i.lat}&mlon=${i.lng}#map=17/${i.lat}/${i.lng}">Open in Maps</a>` : '<p class="muted">No location was added to this report.</p>');
+            if (i.author === user) { // only the person who posted a report can delete it
+      const btn = document.createElement('div');
+      btn.className = 'app-button danger';
+      btn.textContent = 'Delete this report';
+      btn.onclick = async () => {
+        if (!confirm('Delete this report? This cannot be undone.')) return;
+        try { await api('/incidents/' + i.id, { method: 'DELETE' }); delete byId[i.id]; toast('Report deleted.'); App.back(); }
+        catch (e) { toast(e.message); }
+      };
+      q('.detail', page).appendChild(btn);
+    }
     $(page).on('appShow', () => { here = 'detail'; });
   });
 
